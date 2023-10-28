@@ -5,7 +5,10 @@ const app = express() // Inicializando express
 
 
 app.get("/mensagem/:id/:user", (request, response) => {
-    response.send(`Olá, mundo! ${request.params.id}, para o usuário : ${request.params.user}`)
+
+    const {id, user} = request.params
+
+    response.send(`Olá, mundo! ${id}, para o usuário : ${user}`)
 })
 
 
