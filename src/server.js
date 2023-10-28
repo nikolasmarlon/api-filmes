@@ -8,7 +8,7 @@ app.get("/mensagem/:id/:user", (request, response) => {
 
     const {id, user} = request.params
 
-    response.send(`Olá, mundo! ${id}, para o usuário : ${user}`)
+    response.send(`Olá, mundo! ${id}, para o usuário : ${user}`) // Route params
 })
 
 
