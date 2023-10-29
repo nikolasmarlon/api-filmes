@@ -46,6 +46,40 @@ class UsersController {
         return resposta.status(201).json()
 
     }   
+
+    async update(request, response){
+        const {nome, email} = request.body // pegar nome e email do corpo da requisição
+        const { id } = request.params // pegar o id pelo parâmetro, passado na url
+
+        // criar conexão com banco
+        const database = await sqliteConnection()
+        // pegar o usuário
+        const user = await database.get("select * from users where id = (?)", [id])
+
+        // verificar se o usuário existe
+        if(!user){
+            throw new AppError("Usuário não encontrado")
+        }
+
+        // busca pelo email
+        const userWithUpdatedEmail = await database.get("select * from users where email = (?)", [email])
+        
+        // verificar se o email já está em uso 
+        // se encontar um email e o id deste email for diferente do id do usuário, retorna uma mensagem
+        if(userWithUpdatedEmail && userWithUpdatedEmail.id !== user.id){ 
+            throw new AppError("Este email já está em uso")
+        }
+
+        user.nome = nome
+        user.email = email
+
+
+        // Fazer o update na tabela
+
+        await database.run("update users set name = (?), email = (?), updated_at = (?) where id = (?)", [user.nome, user.email, new Date(), id])
+
+        return response.status(200).json()
+    }
 }
 
 module.exports = UsersController
