@@ -15,10 +15,9 @@ const express = require('express')
 const routes = require('./routes')
 
 
-// const database = require('./database/sqlite')
-const migrationsRun = require('./database/sqlite/migrations')
-
-migrationsRun()
+// const database = require('./database/sqlite') // forma sem as migrations
+//const migrationsRun = require('./database/sqlite/migrations')  // migrations no sql puro // nao precisa se for usar knex
+//migrationsRun() // migrations no sql puro == nao precisa se for usar knex
 
 const app = express() // Inicializando express
 
