@@ -69,10 +69,26 @@ class MovieNotesController {
     async index(request, response){
 
         // Pegando user id por uma query
-        const { user_id, title } = request.query
+        const { user_id, title, movie_tags} = request.query
 
-        // Buscar todas as notas deste usuário 
-        const notes = await knex("movie_notes").where({ user_id }).whereLike("title", `%${title}%`).orderBy("title")
+        let notes
+
+
+        // se tiver tags , vai consulter por elas, caso nao tenha, segue para consultar por title ou id
+        if(movie_tags){
+
+            // pegar as tags e separar por virgula, pois foi enviado na query separado por virgulas
+            const filterMovieTags = movie_tags.split(',').map(tag => tag.trim())
+            // console.log(filterMovieTags)
+
+            notes = await knex('movie_tags').whereIn("name", filterMovieTags) // busca somente a tag e nao as notas vinculadas
+
+        } else {
+            
+            // Buscar todas as notas deste usuário 
+            notes = await knex("movie_notes").where({ user_id }).whereLike("title", `%${title}%`).orderBy("title")
+        }
+
 
 
         return response.json({
