@@ -1,15 +1,13 @@
 const { Router } = require('express')
 
+const UsersController = require('../controllers/UsersController') // classe precisa ser instânciada
+
 //Inicializando Router()
-const userRoutes = Router()
+const usersRoutes = Router()
 
+const usersController = new UsersController()
 
-userRoutes.post("/", (requisicao, resposta) => {
-    
-    const {nome, email, senha} = requisicao.body
+// A rota vai receber a requisição e a resposta e repassar para o controller
+usersRoutes.post("/",  usersController.create)
 
-   // resposta.send(`Usuário: ${nome} -- E-mail: ${email}, senha: ${senha}`) // Devolve um html
-    resposta.json( {nome, email, senha}) // Devolve um objeto json
-})
-
-module.exports = userRoutes
+module.exports = usersRoutes
