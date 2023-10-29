@@ -6,20 +6,6 @@ const UsersController = require('../controllers/UsersController') // classe prec
 const usersRoutes = Router()
 
 
-//Duas formas de usar o middleware
-// 1ª Passar para cada rota para interceptar a requisição e a resposta e o next
-// 2ª Segunda forma é passando para todas as rotas 
-function meuMiddleware(requisicao, resposta, next){
-    console.log('voce passou pelo middleware')
-    console.log(requisicao.body)
-
-    if(!requisicao.body.isAdmin){
-        return resposta.json({ mensagem: "Usuário nao altorizado!"})
-    }
-    next()
-}
-
-usersRoutes.use(meuMiddleware)
 
 const usersController = new UsersController()
 
