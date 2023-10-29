@@ -9,7 +9,8 @@
  * 
  */
 
-
+require('express-async-errors')
+const AppError = require('./utils/AppError')
 
 const express = require('express')
 
@@ -28,8 +29,26 @@ app.use(routes) // pegar as rotas que vem do index.js em ./routes
 
 
 
+// para usar o express-async-errors
+app.use( (error, request, response, next) => {
 
+    // se é um erro pelo lado do cliente
+    if(error instanceof AppError){
+        return response.status(error.statusCode).json({
+            status: 'error',
+            message: error.message
+        })
+    }
 
+    // para debugar
+    console.error(error)
+
+    // se o erro nao for do cliente, então retorna um erro padrão
+    return response.status(500).json({
+        status: 'error',
+        message: "Internal server error"
+    })
+})
 
 
 const PORTA = 3333
