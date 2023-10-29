@@ -81,7 +81,17 @@ class MovieNotesController {
             const filterMovieTags = movie_tags.split(',').map(tag => tag.trim())
             // console.log(filterMovieTags)
 
-            notes = await knex('movie_tags').whereIn("name", filterMovieTags) // busca somente a tag e nao as notas vinculadas
+            notes = await knex('movie_tags')
+                .select([
+                    "movie_notes.id",
+                    "movie_notes.title",
+                    "movie_notes.user_id",
+                ])
+                .where("movie_notes.user_id", user_id)
+                .whereLike("movie_notes.title", `%${title}%` )
+                .whereIn("name", filterMovieTags) // busca somente a tag e nao as notas vinculadas
+                .innerJoin("movie_notes", "movie_notes.id", "movie_tags.note_id")
+                .orderBy("movie_notes.title")
 
         } else {
             
