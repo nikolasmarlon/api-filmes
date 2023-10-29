@@ -70,8 +70,8 @@ class UsersController {
             throw new AppError("Este email já está em uso")
         }
 
-        user.nome = nome
-        user.email = email
+        user.nome = nome ?? user.name // se bão for informado nome, mantém o antigo
+        user.email = email ?? user.email // se nao for informado o email, matém o antigo
 
 
         // verificar mudança de senha
