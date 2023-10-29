@@ -20,20 +20,28 @@
 
 const AppError = require('../utils/AppError')
 
+const sqliteConnection = require('../database/sqlite')
+
 class UsersController {
 
-
     //Métodos ( função )
-    create(requisicao, resposta){
+    // transformar em uma função async para poder usar o await e conectar com banco de forma assíncrona
+    async create(requisicao, resposta){
         const {nome, email, senha} = requisicao.body
+        const database = await sqliteConnection()
 
-        if(!nome){
-            throw new AppError("Informe um nome", )
+        //verificar se o email já existe
+        const checkUserExists = await database.get("select * from users where email = (?)", [email])
+
+        if(checkUserExists){
+            throw new AppError("E-mail em uso")
         }
 
-        // resposta.send(`Usuário: ${nome} -- E-mail: ${email}, senha: ${senha}`) // Devolve um html
-        resposta.json( {nome, email, senha}) // Devolve um objeto json
-    }
+        await database.run("insert into users (name, email, password) values (?, ?, ?) ", [nome, email, senha])
+
+        return resposta.status(201).json()
+
+    }   
 }
 
 module.exports = UsersController
