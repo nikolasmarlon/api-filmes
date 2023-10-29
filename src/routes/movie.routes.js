@@ -12,6 +12,7 @@ const movieNotesController = new MovieNotesController()
 // A rota vai receber a requisição e a resposta e repassar para o controller
 movieRoutes.post("/:user_id", movieNotesController.create) 
 movieRoutes.get("/:id", movieNotesController.show) 
+movieRoutes.delete("/:id", movieNotesController.delete) 
 
 
 module.exports = movieRoutes
