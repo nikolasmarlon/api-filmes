@@ -18,6 +18,8 @@
  *  OBS: Se for preciso mais que cinco métods, é uma boa prática criar outro controller
  */
 
+
+const { hash } = require('bcryptjs')
 const AppError = require('../utils/AppError')
 
 const sqliteConnection = require('../database/sqlite')
@@ -37,7 +39,9 @@ class UsersController {
             throw new AppError("E-mail em uso")
         }
 
-        await database.run("insert into users (name, email, password) values (?, ?, ?) ", [nome, email, senha])
+        const senhaCriptografada = await hash(senha, 8)
+
+        await database.run("insert into users (name, email, password) values (?, ?, ?) ", [nome, email, senhaCriptografada])
 
         return resposta.status(201).json()
 

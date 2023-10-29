@@ -13,6 +13,7 @@ exports.down = knex => knex.schema.dropTable("users")
 
 
 
+
 exports.up = knex => knex.schema.createTable("movie_notes", table => {
     table.increments("id");
     table.text("title");
