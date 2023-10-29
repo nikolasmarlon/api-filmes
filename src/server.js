@@ -11,12 +11,9 @@
 
 require('express-async-errors')
 const AppError = require('./utils/AppError')
-
 const express = require('express')
-
-
 const routes = require('./routes')
-
+const database = require('./database/sqlite')
 
 
 const app = express() // Inicializando express
@@ -26,6 +23,7 @@ app.use(express.json()) // Avisar que os dados serão passados em json
 
 app.use(routes) // pegar as rotas que vem do index.js em ./routes
 
+database()
 
 
 
