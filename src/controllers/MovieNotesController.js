@@ -34,7 +34,22 @@ class MovieNotesController {
         response.json()
     }
 
-    
+    async show(request, response){
+        // recuperar o id de request params
+        const { id } = request.params
+
+        // selecionar a nota, buscando pelas notas baseadas no id, e pegar a primeira nota
+        const note = await knex('movie_notes').where({id}).first()
+
+        // selecionar as movie_tags
+        const tags = await knex('movie_tags').where({note_id: id}).orderBy("name")
+
+
+        return response.json({
+            ...note,
+            tags
+        })
+    }
 
 }
 
