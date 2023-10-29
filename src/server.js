@@ -3,20 +3,15 @@ const express = require('express')
 
 const app = express() // Inicializando express
 
-
-app.get("/mensagem/:id/:user", (request, response) => {
-
-    const {id, user} = request.params
-
-    response.send(`Olá, mundo! ${id}, para o usuário : ${user}`) // Route params === são obrigatórios
-})
+app.use(express.json()) // Avisar que os dados serão passados em json
 
 
+app.post("/users", (requisicao, resposta) => {
+    
+    const {nome, email, senha} = requisicao.body
 
-app.get("/users", (requisicao, resposta) => {
-    const { pagina, limite} = requisicao.query
-
-    resposta.send(`Página: ${pagina}, limite: ${limite}`) //Query Params === opcional exemplo rota no navegador http://localhost:3333/users?pagina=4&&limite=10
+   // resposta.send(`Usuário: ${nome} -- E-mail: ${email}, senha: ${senha}`) // Devolve um html
+    resposta.json( {nome, email, senha}) // Devolve um objeto json
 })
 
 
