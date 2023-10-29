@@ -95,7 +95,7 @@ class UsersController {
 
 
         // Fazer o update na tabela
-        await database.run("update users set name = (?), email = (?), password = (?), updated_at = (?) where id = (?)", [user.nome, user.email, user.password, new Date(), id])
+        await database.run("update users set name = (?), email = (?), password = (?), updated_at = datetime('now') where id = (?)", [user.nome, user.email, user.password, id])
 
         return response.status(200).json()
     }
