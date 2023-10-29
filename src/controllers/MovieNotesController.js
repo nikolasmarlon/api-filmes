@@ -2,6 +2,7 @@ const knex = require('../database/knex') // knex de dentro de database do projet
 
 class MovieNotesController {
 
+    // Criar uma nota
     async create(request, response){
         const { title, description, rating, movie_tags } = request.body
         const { user_id } = request.params
@@ -34,6 +35,8 @@ class MovieNotesController {
         response.json()
     }
 
+
+    // Listar uma notas
     async show(request, response){
         // recuperar o id de request params
         const { id } = request.params
@@ -51,6 +54,8 @@ class MovieNotesController {
         })
     }
 
+
+    // Deletar uma nota
     async delete(request, response){
         const { id } = request.params
 
@@ -58,6 +63,21 @@ class MovieNotesController {
 
 
         return response.json()
+    }
+
+    // Listar todas as notas
+    async index(request, response){
+
+        // Pegando user id por uma query
+        const { user_id, title } = request.query
+
+        // Buscar todas as notas deste usuário 
+        const notes = await knex("movie_notes").where({ user_id }).whereLike("title", `%${title}%`).orderBy("title")
+
+
+        return response.json({
+            notes
+        })
     }
 
 }

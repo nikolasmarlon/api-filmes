@@ -13,6 +13,7 @@ const movieNotesController = new MovieNotesController()
 movieRoutes.post("/:user_id", movieNotesController.create) 
 movieRoutes.get("/:id", movieNotesController.show) 
 movieRoutes.delete("/:id", movieNotesController.delete) 
+movieRoutes.get("/", movieNotesController.index) // nao precisa informar o id, pq estamos usando query
 
 
 module.exports = movieRoutes
