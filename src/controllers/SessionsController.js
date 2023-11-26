@@ -1,3 +1,8 @@
+
+const knex = require('../database/knex')
+
+const AppError = require('../utils/AppError')
+
 class SessionsController {
 
 
@@ -6,7 +11,13 @@ class SessionsController {
 
         const { email, password } = request.body
 
-        return response.json({  email, password })
+        const user = await knex("users").where({ email }).first()
+
+        if(!user){
+            throw new AppError("E-mail e/ou senha incorreto", 401)
+        }
+
+        return response.json({  user })
     }
 
 }
