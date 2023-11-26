@@ -5,7 +5,7 @@ class MovieNotesController {
     // Criar uma nota
     async create(request, response){
         const { title, description, rating, movie_tags } = request.body
-        const { user_id } = request.params
+        const  user_id  = request.user.id
 
 
 
@@ -68,8 +68,10 @@ class MovieNotesController {
     // Listar todas as notas
     async index(request, response){
 
-        // Pegando user id por uma query
-        const { user_id, title, movie_tags} = request.query
+        
+        const { title, movie_tags} = request.query
+
+        const  user_id  = request.user.id
 
         let notes
 

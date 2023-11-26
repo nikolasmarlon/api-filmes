@@ -5,9 +5,12 @@ const MovieNotesController = require('../controllers/MovieNotesController') // c
 //Inicializando Router()
 const movieRoutes = Router()
 
+const ensureAuthenticated = require('../middlewares/ensureAuthenticated')
 
 
 const movieNotesController = new MovieNotesController()
+
+movieRoutes.use(ensureAuthenticated)// Passar Middleware para todas as rotas 
 
 // A rota vai receber a requisição e a resposta e repassar para o controller
 movieRoutes.post("/:user_id", movieNotesController.create) 

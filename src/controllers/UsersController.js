@@ -49,12 +49,14 @@ class UsersController {
 
     async update(request, response){
         const {nome, email, senha, senha_antiga} = request.body // pegar nome e email do corpo da requisição
-        const { id } = request.params // pegar o id pelo parâmetro, passado na url
+        
+        // aplicando id pelo corpo da requisição const { id } = request.params // pegar o id pelo parâmetro, passado na url
+        const user_id = request.user.id
 
         // criar conexão com banco
         const database = await sqliteConnection()
         // pegar o usuário
-        const user = await database.get("select * from users where id = (?)", [id])
+        const user = await database.get("select * from users where id = (?)", [user_id])
 
         // verificar se o usuário existe
         if(!user){
@@ -95,7 +97,7 @@ class UsersController {
 
 
         // Fazer o update na tabela
-        await database.run("update users set name = (?), email = (?), password = (?), updated_at = datetime('now') where id = (?)", [user.nome, user.email, user.password, id])
+        await database.run("update users set name = (?), email = (?), password = (?), updated_at = datetime('now') where id = (?)", [user.nome, user.email, user.password, user_id])
 
         return response.status(200).json()
     }

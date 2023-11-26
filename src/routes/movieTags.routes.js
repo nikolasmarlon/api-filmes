@@ -5,11 +5,12 @@ const MovieTagsController = require('../controllers/MovieTagsController') // cla
 //Inicializando Router()
 const movieTagsRoutes = Router()
 
+const ensureAuthenticated = require('../middlewares/ensureAuthenticated')
 
 
 const movieTagsController = new MovieTagsController()
 
-movieTagsRoutes.get("/:user_id", movieTagsController.index) // nao precisa informar o id, pq estamos usando query
+movieTagsRoutes.get("/",ensureAuthenticated,  movieTagsController.index) 
 
 
 module.exports = movieTagsRoutes
