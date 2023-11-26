@@ -32,7 +32,7 @@ class MovieNotesController {
         
         await knex("movie_tags").insert(movieTagsInsert) // inserindo o vetor com kenx no banco
 
-        response.json()
+        return response.json()
     }
 
 
