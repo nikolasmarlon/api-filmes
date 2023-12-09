@@ -28,11 +28,14 @@ class DiskStorage{
         const filePath = path.resolve(uploadConfig.UPLOADS_FOLDER, file)
 
         try {
+
+            // stat retorna o estodo do arquivo ( se está aberto... ou disponível)
             await fs.promises.stat(filePath)
         } catch {
             return
         }
 
+        // unlink remove o arquivo 
         await fs.promises.unlink(filePath)
     }
 }

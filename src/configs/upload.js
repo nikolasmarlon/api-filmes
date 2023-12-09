@@ -3,7 +3,7 @@ const multer = require("multer")
 const crypto = require("crypto")
 
 const TMP_FOLDER = path.resolve(__dirname, "..", "..", "tmp") // endereço
-const UPLOADS_FOLDER = path.resolve(__dirname, "uploads") // endereço
+const UPLOADS_FOLDER = path.resolve(TMP_FOLDER, "uploads") // endereço
 
 // Multer é a biblioteca para fazer o upload
 const MULTER = {
