@@ -14,7 +14,7 @@ class DiskStorage{
 
     async savaFile(file){
 
-        // reneme é para mudar o arquivo de lugar
+        // reneme é usado renomear ou mudar o arquivo de lugar
         await fs.promises.rename(
             path.resolve(uploadConfig.TMP_FOLDER, file),
             path.resolve(uploadConfig.UPLOADS_FOLDER)
