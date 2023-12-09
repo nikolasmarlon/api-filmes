@@ -4,6 +4,7 @@ const multer = require('multer')
 const uploadConfig = require('../configs/upload')
 
 const UsersController = require('../controllers/UsersController') // classe precisa ser instânciada
+const UserAvatarController = require('../controllers/UserAvatarController') // classe precisa ser instânciada
 
 //Inicializando Router()
 const usersRoutes = Router()
@@ -17,9 +18,10 @@ const ensureAuthenticated = require('../middlewares/ensureAuthenticated')
 
 
 const usersController = new UsersController()
+const userAvatarController = new UserAvatarController()
 
 // A rota vai receber a requisição e a resposta e repassar para o controller
 usersRoutes.post("/", usersController.create) // a rota tem o endereço, o middleware e o controller, ( antes do executar o controller, tudo vai passar pelo middleware)
 usersRoutes.put('/', ensureAuthenticated, usersController.update) // Aplicando Middleware
-usersRoutes.patch('/avatar', ensureAuthenticated, upload.single("avatar"), ) // Atualizar um campo específico
+usersRoutes.patch('/avatar', ensureAuthenticated, upload.single("avatar"), userAvatarController.update) // Atualizar um campo específico
 module.exports = usersRoutes
