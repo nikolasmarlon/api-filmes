@@ -13,6 +13,7 @@ require('express-async-errors')
 const AppError = require('./utils/AppError')
 const express = require('express')
 const routes = require('./routes')
+const uploadConfig = require('./configs/upload')
 
 
 // const database = require('./database/sqlite') // forma sem as migrations
@@ -23,6 +24,8 @@ const app = express() // Inicializando express
 
 app.use(express.json()) // Avisar que os dados serão passados em json
 
+// servir arquivos estáticos
+app.use("/files", express.static(uploadConfig.UPLOADS_FOLDER))
 
 app.use(routes) // pegar as rotas que vem do index.js em ./routes
 
