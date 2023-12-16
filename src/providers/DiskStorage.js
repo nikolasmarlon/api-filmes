@@ -12,12 +12,12 @@ const uploadConfig = require("../configs/upload")
 // Criar como class
 class DiskStorage{
 
-    async savaFile(file){
+    async saveFile(file){
 
         // reneme é usado renomear ou mudar o arquivo de lugar
         await fs.promises.rename(
             path.resolve(uploadConfig.TMP_FOLDER, file),
-            path.resolve(uploadConfig.UPLOADS_FOLDER)
+            path.resolve(uploadConfig.UPLOADS_FOLDER, file)
         )
         return file
     }

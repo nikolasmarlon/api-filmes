@@ -15,12 +15,11 @@ class UserAvatarController{
         const diskStorage = new DiskStorage()
        
         // buscar com knex no banco os dados do usuário para atualizar e por numa constante
-        const user = await knex("users")
-        .where({ id: user_id}).first() 
+        const user = await knex("users").where({ id: user_id}).first() 
 
         // Verificar se está autenticado
         if(!user){
-            throw new AppError("Somente usuário autenticados podem a foto de perfil", 401)
+            throw new AppError("Somente usuário autenticados podem alterar a foto de perfil", 401)
         }
 
         // Verificar se existe avatar e deletar a antiga
@@ -29,8 +28,8 @@ class UserAvatarController{
         }
 
 
-        // Pegar a novo foto ( avatar )
-        const filename = await diskStorage.savaFile(avatarFilename)
+        // Pegar a nova foto ( avatar )
+        const filename = await diskStorage.saveFile(avatarFilename)
 
         user.avatar = filename
 
