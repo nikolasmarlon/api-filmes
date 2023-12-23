@@ -14,6 +14,7 @@ const AppError = require('./utils/AppError')
 const express = require('express')
 const routes = require('./routes')
 const uploadConfig = require('./configs/upload')
+const cors = require('cors')
 
 
 // const database = require('./database/sqlite') // forma sem as migrations
@@ -21,6 +22,8 @@ const uploadConfig = require('./configs/upload')
 //migrationsRun() // migrations no sql puro == nao precisa se for usar knex
 
 const app = express() // Inicializando express
+
+app.use(cors()) // para atender o frontend
 
 app.use(express.json()) // Avisar que os dados serão passados em json
 
