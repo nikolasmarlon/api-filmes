@@ -13,7 +13,7 @@ const movieNotesController = new MovieNotesController()
 movieRoutes.use(ensureAuthenticated)// Passar Middleware para todas as rotas 
 
 // A rota vai receber a requisição e a resposta e repassar para o controller
-movieRoutes.post("/:user_id", movieNotesController.create) 
+movieRoutes.post("/", movieNotesController.create) 
 movieRoutes.get("/:id", movieNotesController.show) 
 movieRoutes.delete("/:id", movieNotesController.delete) 
 movieRoutes.get("/", movieNotesController.index) // nao precisa informar o id, pq estamos usando query
