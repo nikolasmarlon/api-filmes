@@ -48,7 +48,7 @@ class UsersController {
     }   
 
     async update(request, response){
-        const {nome, email, senha, senha_antiga} = request.body // pegar nome e email do corpo da requisição
+        const {name, email, password, old_password} = request.body // pegar nome e email do corpo da requisição
         
         // aplicando id pelo corpo da requisição const { id } = request.params // pegar o id pelo parâmetro, passado na url
         const user_id = request.user.id
@@ -72,32 +72,32 @@ class UsersController {
             throw new AppError("Este email já está em uso")
         }
 
-        user.nome = nome ?? user.name // se bão for informado nome, mantém o antigo
+        user.name = name ?? user.name // se não for informado nome, mantém o antigo
         user.email = email ?? user.email // se nao for informado o email, matém o antigo
 
 
         // verificar mudança de senha
         //se digitou a senha, mas nao digitou a antiga, então
-        if(senha && !senha_antiga){
+        if(password && !old_password){
             throw new AppError("Informe a senha anterior")
         }
         
         // agora verificar se a senha antiga informada é igual a senha antiga
-        if(senha && senha_antiga){
-            const checkSenhaAntiga = await compare(senha_antiga, user.password)
+        if(password && old_password){
+            const checkSenhaAntiga = await compare(old_password, user.password)
             
             
             if(!checkSenhaAntiga){
                 throw new AppError("Senha antiga não confere")
             }
 
-            user.password = await hash(senha, 8)
+            user.password = await hash(password, 8)
 
         }
 
 
         // Fazer o update na tabela
-        await database.run("update users set name = (?), email = (?), password = (?), updated_at = datetime('now') where id = (?)", [user.nome, user.email, user.password, user_id])
+        await database.run("update users set name = (?), email = (?), password = (?), updated_at = datetime('now') where id = (?)", [user.name, user.email, user.password, user_id])
 
         return response.status(200).json()
     }
