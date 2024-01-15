@@ -93,6 +93,7 @@ class MovieNotesController {
                 .whereLike("movie_notes.title", `%${title}%` )
                 .whereIn("name", filterMovieTags) // busca somente a tag e nao as notas vinculadas
                 .innerJoin("movie_notes", "movie_notes.id", "movie_tags.note_id")
+                .groupBy("notes.id")
                 .orderBy("movie_notes.title")
 
         } else {
