@@ -45,12 +45,12 @@ class MovieNotesController {
         const note = await knex('movie_notes').where({id}).first()
 
         // selecionar as movie_tags
-        const tags = await knex('movie_tags').where({note_id: id}).orderBy("name")
+        const movie_tags = await knex('movie_tags').where({note_id: id}).orderBy("name")
 
 
         return response.json({
             ...note,
-            tags
+            movie_tags
         })
     }
 
