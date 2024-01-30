@@ -30,3 +30,6 @@ exports.up = knex => knex.schema.createTable("movie_notes", table => {
 
   documentação PM2
   https://pm2.keymetrics.io/docs/usage/use-pm2-with-cloud-providers/
+
+  deploy do backend
+  https://render.com/ gratis
