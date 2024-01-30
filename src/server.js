@@ -10,6 +10,7 @@
  */
 
 require('express-async-errors')
+require("dotenv/config") // para acessar as variáveis de ambiente
 const AppError = require('./utils/AppError')
 const express = require('express')
 const routes = require('./routes')
@@ -57,5 +58,5 @@ app.use( (error, request, response, next) => {
 })
 
 
-const PORTA = 3333
+const PORTA = process.env.PORT || 3333
 app.listen(PORTA, () => console.log(`Porta: ${PORTA}`))
